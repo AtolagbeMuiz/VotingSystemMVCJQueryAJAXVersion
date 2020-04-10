@@ -1,0 +1,57 @@
+﻿@model VotingSystemMVCJQueryAJAX.Models.Registration
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Voter Portal</title>
+    <link href="~/content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/scripts/jquery-3.4.1.min (1).js"></script>
+</head>
+<body>
+    <div class="container">
+        <table>
+            <tbody>
+                <tr>
+                    <td><label>Name</label></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><label>Email</label></td>
+                    <td><label id="lblEmail"></label></td>
+                </tr>
+                <tr>
+                    <td><label>Blood Group</label></td>
+                    <td><label id="lblBloodGroup"></label></td>
+                </tr>
+                <tr>
+                    <td><label>Address</label></td>
+                    <td><label id="lblAddress"></label></td>
+                </tr>
+                <tr>
+                    <td><label>Date Of Birth</label></td>
+                    <td><label id="lblDOB"></label></td>
+                </tr>
+                <tr>
+                    <td><label>Telephone</label></td>
+                    <td><label id="lblTelphone"></label></td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+
+    <script>
+        @*var vid= @Request.QueryString["VoterID"].ToString();*@
+        //$(document).ready(function () {
+        //    $.get("/VoterPortal/VoterDetails", {}, function (data) {
+        //        $("#lblName").val(data[0].Name);
+        //        $("#lblEmail").val(data[0].Email);
+        //        $("#lblAddress").val(data[0].Address);
+        //        $("#lblBloodGroup").val(data[0].BloodGroup);
+        //        $("#lblTelephone").val(data[0].Telephone);
+        //        $("#blDOB").val(data[0].DOB);
+        //    });
+        //});
+    </script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+﻿
+@{
+    ViewBag.Title = "RegistationPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Voter Registration</title>
+    <link href="~/content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/scripts/jquery-3.4.1.min (1).js"></script>
+</head>
+<body>
+    <div class="container">
+        <div>
+            @*<div class="col-sm-2"></div>*@
+
+            @*<div class="form-group">
+                <label>Voter's ID</label>
+                <input type="text" id="txtVotersID" class="form-control" />
+            </div>*@
+
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" id="txtName" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="text" id="txtEmail" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="txtPassword" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label>Blood Group</label>
+                <input type="text" id="txtBloodGroup" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label>Address</label>
+                <input type="text" id="txtAddress" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label>Date Of Birth</label>
+                <input type="date" id="txtDOB" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label>Telephone</label>
+                <input type="number" id="txtTelephone" class="form-control" />
+            </div>
+           
+             @*Button*@
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" id="btnSubmit" value="submit" />
+            </div>
+
+            <a href="~/Login/Login">Already have an account? Login here Here</a>
+            <div class="col-sm-2"></div>
+        </div>
+    </div>
+
+    <script>
+        //This Performs a Create/Save/Insert Operation
+        $(document).ready(function () {
+            var SN;
+            $("#btnSubmit").click(function () {
+                //var SerialNo=getsn();
+                //var SerialNo = $("#txtVotersID").val(getsn());
+
+          //Checking the textboxes ain't empty
+                if ($("#txtName").val() == "" || $("#txtEmail").val() == "" || $("#txtPassword").val() == "" || $("#txtBloodGroup").val() == "" || $("#txtAddress").val() == "" || $("#txtDOB").val() == "" || $("#txtTelephone").val() == "") {
+                    alert('Please Fill all Inputs !!!');
+                    //return false;
+                }
+                else
+                {
+                    $.post("/Registration/CheckUser", {
+                        Name: $("#txtName").val(),
+                        Email: $("#txtEmail").val()
+                    },
+                    function (data) {
+
+                        if (data == "1") {
+                            alert("User already Exist!!!");
+                            cleartextboxes();
+
+                        } //if closing Braces for response "1"
+
+                        if (data == "0")
+                        {
+                            $.get("/Registration/GetVotersId", {}, function (data) {
+                                //alert(data);
+                                SN = data;
+                                //alert(SN);
+                                //return SN;
+                                //SN = $("#txtVotersID");
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/Registration/Reg",
+                                    data: {
+                                        VoterID: SN,
+                                        //SerialNo:$("#txtVotersID").val(),
+                                        Name: $("#txtName").val(),
+                                        Email: $("#txtEmail").val(),
+                                        Password: $("#txtPassword").val(),
+                                        BloodGroup: $("#txtBloodGroup").val(),
+                                        Address: $("#txtAddress").val(),
+                                        DOB: $("#txtDOB").val(),
+                                        Telephone: $("#txtTelephone").val()
+                                    },
+                                    success: function (d) {
+                                        //alert(response.d);
+                                        alert("Submitted Successfully");
+                                        alert("Your VoterID is:" + SN);
+                                        cleartextboxes();
+                                    }
+
+                                });
+                            });
+                        }//if closing Braces for response "0"
+
+                    
+
+                        if (data == "Server Error") 
+                        //else
+                        {
+                            alert("Something Went Wrong!!!");
+                            cleartextboxes();
+                        }//else closing Braces for other server response error
+                    
+                    });//POST braces for checkUser
+
+
+                
+
+                } //else closing braces
+                   
+                }); //cick event closing braces
+
+            function cleartextboxes() {
+                $("#txtName").val("");
+                $("#txtEmail").val("");
+                $("#txtPassword").val("");
+                $("#txtBloodGroup").val("");
+                $("#txtAddress").val("");
+                $("#txtDOB").val("");
+                $("#txtTelephone").val("");
+            }
+
+
+           // function getsn () {
+           //     $.get("/Registration/GetVotersId", {}, function (data) {
+           //         //alert(data);
+           //         var SN;
+           //         SN = data;
+           //         //alert(SN);
+           //         return SN;
+           //    })
+           //}
+        }); //DOM ready closing braces
+       
+    </script>
+</body>
+</html>
+
+
